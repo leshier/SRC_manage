@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}SRC资产管理{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'adminlte/plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Ionicons -->
+{#  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">#}
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="{% static 'adminlte/plugins/daterangepicker/daterangepicker.css' %}">
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="{% static 'adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+  <!-- Bootstrap Color Picker -->
+  <link rel="stylesheet" href="{% static 'adminlte/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css' %}">
+  <!-- Tempusdominus Bbootstrap 4 -->
+  <link rel="stylesheet" href="{% static 'adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{% static 'adminlte/plugins/select2/css/select2.min.css' %}">
+  <link rel="stylesheet" href="{% static 'adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+  <!-- Bootstrap4 Duallistbox -->
+  <link rel="stylesheet" href="{% static 'adminlte/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'adminlte/dist/css/adminlte.min.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+{% endblock %}
+
+{% block left_item %}
+    <li class="nav-item">
+            <a href="/index/" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                主页
+              </p>
+            </a>
+          </li>
+
+            <li class="nav-item">
+            <a href="/srclist/" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                SRC资产
+              </p>
+            </a>
+          </li>
+        <li class="nav-item">
+            <a href="/addsrc/" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                增加SRC资产
+              </p>
+            </a>
+          </li>
+
+        <li class="nav-item">
+            <a href="/addsrc/" class="nav-link active">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                增加SRC平台
+              </p>
+            </a>
+          </li>
+
+{% endblock %}
+
+{% block header %}
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>增加SRC资产</h1>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+{% endblock %}
+
+{% block content %}
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">增加SRC平台</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label>SRC 名称</label>
+                    <input type="text" class="form-control" id="SRC_platform_name" placeholder="输入SRC平台名称">
+                  </div>
+                  <div class="form-group">
+                    <label>SRC 网址</label>
+                    <input type="text" class="form-control" id="SRC_platform_url" placeholder="输入SRC平台网址">
+                  </div>
+{#                  <div class="form-group">#}
+{#                    <label for="exampleInputFile">SRC logo</label>#}
+{#                    <div class="input-group">#}
+{#                      <div class="custom-file">#}
+{#                        <input type="file" class="custom-file-input" id="exampleInputFile">#}
+{#                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>#}
+{#                      </div>#}
+{#                      <div class="input-group-append">#}
+{#                        <span class="input-group-text" id="">Upload</span>#}
+{#                      </div>#}
+{#                    </div>#}
+{#                  </div>#}
+
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+            <!-- /.card -->
+
+          </div>
+          <!--/.col (left) -->
+          <!-- right column -->
+
+          <!--/.col (right) -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+{% endblock %}
+
+
+{% block js %}
+    <script src="{% static 'adminlte/plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- Select2 -->
+<script src="{% static 'adminlte/plugins/select2/js/select2.full.min.js' %}"></script>
+<!-- Bootstrap4 Duallistbox -->
+<script src="{% static 'adminlte/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js' %}"></script>
+<!-- InputMask -->
+<script src="{% static 'adminlte/plugins/moment/moment.min.js' %}"></script>
+<script src="{% static 'adminlte/plugins/inputmask/min/jquery.inputmask.bundle.min.js' %}"></script>
+<!-- date-range-picker -->
+<script src="{% static 'adminlte/plugins/daterangepicker/daterangepicker.js' %}"></script>
+<!-- bootstrap color picker -->
+<script src="{% static 'adminlte/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js' %}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{% static 'adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<!-- Bootstrap Switch -->
+<script src="{% static 'adminlte/plugins/bootstrap-switch/js/bootstrap-switch.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'adminlte/dist/js/adminlte.min.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'adminlte/dist/js/demo.js' %}"></script>
+<!-- Page script -->
+<script>
+    $(function () {
+        $('#SRC_platform_name').bind('input propertychange',function(){
+　　　       input_src_platform_name = $('#SRC_platform_name').val();
+            url = '/cksrcname/';
+            $.ajax({
+                type : "POST",
+                url : url,
+                data: {'src_platform_name':input_src_platform_name},
+                
+
+            })
+        })
+    })
+
+</script>
+{% endblock %}

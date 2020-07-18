@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+    <!-- DataTables -->
+  <link rel="stylesheet" href="{% static 'adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+{% endblock %}
+{% block header_title %}{% endblock %}
+{% block header_list %}
+<li class="breadcrumb-item active">SRC列表</li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+          <h3 class="card-title">SRC 列表</h3>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body">
+        <table id="src_table" class="table table-bordered table-hover" >
+{#            <thead>#}
+{#                  <tr>#}
+{#                    <th>序号</th>#}
+{#                    <th>平台</th>#}
+{#                    <th>厂商</th>#}
+{#                    <th>资产数量</th>#}
+{#                    <th>增加时间</th>#}
+{#                    <th>更新时间</th>#}
+{#                    <th>操作</th>#}
+{#                  </tr>#}
+{#                  </thead>#}
+{#                  <tbody>#}
+{#                  {% for src in src_list %}#}
+{#                    <tr>#}
+{#                    <td>{{ forloop.counter }}</td>#}
+{#                    <td>{{ src.0 }}</td>#}
+{#                    <td>{{ src.1 }}</td>#}
+{#                    <td>{{ src.2 }}</td>#}
+{#                    <td>{{ src.3 | date:"Y/m/d (H:m:s)"}}</td>#}
+{#                    <td>{{ src.4 | date:"Y/m/d (H:m:s)"}}</td>#}
+{##}
+{#                    <td >#}
+{#                          <div class="row">#}
+{#                            <div class="col-12 col-md-4">#}
+{#                                <button type="button" class="btn btn-block btn-default btn-xs"><i class="fas fa-info"></i>&nbsp;详细</button>#}
+{#                            </div>#}
+{#                              <div class="col-12 col-md-4">#}
+{#                                <button type="button" class="btn btn-block btn-primary btn-xs"><i class="fas fa-edit"></i>&nbsp;编辑</button>#}
+{#                            </div>#}
+{#                            <div class="col-12 col-md-4">#}
+{#                              <form>#}
+{#                                <button type="button" class="btn btn-block btn-danger btn-xs"><i class="fas fa-trash"></i>&nbsp;删除</button>#}
+{#                               </form>#}
+{#                            </div>#}
+{#                          </div>#}
+{#                    </td>#}
+{#                    </tr>#}
+{#                  {% endfor %}#}
+{#                  </tbody>#}
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block js %}
+    <script src="{% static 'adminlte/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+    <script>
+    $(document).ready( function () {
+        var data = [
+            {% for src in src_list %}
+            [
+                 '{{ forloop.counter }}',
+                 '{{ src.0 }}',
+                 '{{ src.1 }}',
+                 '{{ src.2 }}',
+                 '{{ src.3 | date:"Y/m/d (H:m:s)"}}',
+                 '{{ src.4 | date:"Y/m/d (H:m:s)"}}',
+                 '编辑',
+            ],
+            {% endfor %}
+        ]
+        $("#src_table").DataTable({
+
+            "responsive": true,
+            "autoWidth": false,
+            data:data,
+        columns:[
+            {title:'序号'},
+            {title:'平台'},
+            {title:'厂商'},
+            {title:'资产数量'},
+            {title:'增加时间'},
+            {title:'更新时间'},
+            {title:'操作'},
+
+        ]
+
+
+    });
+
+    });
+
+
+    </script>
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+    <!-- DataTables -->
+  <link rel="stylesheet" href="{% static 'adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+
+{% endblock %}
+{% block header_title %}{% endblock %}
+{% block header_list %}
+<ol class="breadcrumb float-sm-right">
+    <li class="breadcrumb-item active">域名管理</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+          <div class="row">
+            <a class="nav-link" href="#" style="color: rgba(0,0,0,.5)">
+                  <i class="fas fa-plus-circle">添加</i>
+            </a>
+          <a class="nav-link" href="#" style="color: rgba(255,51,0,0.94)">
+                  <i class="fas fa-trash">删除</i>
+            </a>
+          </div>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body">
+        <table id="domain_table"  class="table table-bordered table-hover" >
+            <thead>
+                  <tr>
+                      <th><B>序号</B></th>
+                      <th>厂商</th>
+                      <th>主域名</th>
+                      <th>子域名</th>
+                      <th>状态码</th>
+                      <th>标题</th>
+                      <th>中间件</th>
+                      <th>归属地</th>
+                      <th>更新时间</th>
+                      <th>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {% for dm in domains %}
+                    <tr>
+                    <td>{{ forloop.counter }}</td>
+
+                        <td>{{ dm.company_domain.company.company_name }}</td>
+                        <td>{{ dm.company_domain.company_domain_domains }}</td>
+                        <td>{{ dm.target_subdomain_subdomain }}</td>
+
+                        <td><span data-toggle="tooltip" title="" class="badge bg-warning">{{ dm.target_subdomain_statuscode }}</span></td>
+                        <td>{{ dm.target_subdomain_title }}</td>
+                        <td><span data-toggle="tooltip" title="" class="badge bg-primary">{{ dm.target_subdomain_middleware }}</span></td>
+                        <td>{{ dm.target_subdomain_localtion }}</td>
+                        <td>{{ dm.m_time | date:"Y/m/d (H:m:s)"}}</td>
+                    <td >
+                          <div class="row">
+                            <div class="col-12 col-md-4">
+                                <button type="button" class="btn btn-block btn-default btn-xs"><i class="fas fa-info"></i></button>
+                            </div>
+                              <div class="col-12 col-md-4">
+                                <button type="button" class="btn btn-block btn-primary btn-xs"><i class="fas fa-edit"></i></button>
+                            </div>
+                            <div class="col-12 col-md-4">
+                              <form>
+                                <button type="button" class="btn btn-block btn-danger btn-xs"><i class="fas fa-trash"></i></button>
+                               </form>
+                            </div>
+                          </div>
+                    </td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+{% block js %}
+    <script src="{% static 'adminlte/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+    <script>
+    $("#domain_table").DataTable({
+
+      "autoWidth": false,
+      "responsive": true,
+        "bScrollCollapse" : true,
+        scrollY: 400,
+
+    });
+
+    </script>
+{% endblock %}

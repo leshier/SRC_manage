@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+    <!-- DataTables -->
+  <link rel="stylesheet" href="{% static 'adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+
+{% endblock %}
+{% block header_title %}{% endblock %}
+{% block header_list %}
+<ol class="breadcrumb float-sm-right">
+    <li class="breadcrumb-item active">IP管理</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+          <div class="row">
+            <a class="nav-link" href="#" style="color: rgba(0,0,0,.5)">
+                  <i class="fas fa-plus-circle" data-toggle="modal" data-target="#modal-default">添加</i>
+            </a>
+          <a class="nav-link" href="#" style="color: rgba(255,51,0,0.94)">
+                  <i class="fas fa-trash">删除</i>
+            </a>
+          </div>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body">
+        <table id="ips_table"  class="table table-bordered table-hover" >
+            <thead>
+                  <tr>
+                    <th>序号</th>
+
+                    <th>厂商</th>
+                    <th>IP:PORT</th>
+
+                    <th>服务</th>
+                    <th>状态码</th>
+                    <th>标题</th>
+                    <th>中间件</th>
+                    <th>归属地</th>
+                    <th>更新时间</th>
+                    <th>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {% for ip in ips %}
+                    <tr>
+                    <td>{{ forloop.counter }}</td>
+
+                    <td>{{ ip.company_ips.company.company_name }}</td>
+                    <td>{{ ip.target_ip_ip }}:{{ ip.target_ip_port }}</td>
+
+                    <td>{{ ip.target_ip_service }}</td>
+                    <td>{{ ip.target_ip_statuscode }}</td>
+                    {% if ip.target_ip_title|length > 6 %}
+                    <td title="{{ ip.target_ip_title }}" id="td_title">
+                        {{ ip.target_ip_title | slice:":6"}}...
+                    </td>
+                    {% else %}
+                    <td id="td_title">
+                        {{ ip.target_ip_title}}
+                    </td>
+
+                    {% endif %}
+                    <td>{{ ip.target_ip_middleware }}</td>
+                    <td>{{ ip.target_ip_localtion }}</td>
+                    <td>{{ ip.m_time | date:"Y/m/d (H:m:s)"}}</td>
+                    <td >
+                          <div class="row">
+                            <div class="col-12 col-md-4">
+                                <button type="button" class="btn btn-block btn-default btn-xs"><i class="fas fa-info"></i></button>
+                            </div>
+                              <div class="col-12 col-md-4">
+                                <button type="button" class="btn btn-block btn-primary btn-xs"><i class="fas fa-edit"></i></button>
+                            </div>
+                            <div class="col-12 col-md-4">
+
+                                <button type="button" class="btn btn-block btn-danger btn-xs"><i class="fas fa-trash"></i></button>
+
+                            </div>
+                          </div>
+                    </td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modal-default">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="card card-info">
+        <div class="card-header" style="background-color:rgba(0,0,0,.5)">
+            <h3 class="card-title">增加资产</h3>
+        </div>
+        <div class="card-body">
+            <form role="form">
+                  {% csrf_token %}
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="src_name">SRC平台名称</label>
+                    <input type="text" class="form-control" id="src_platform_name" placeholder="输入SRC平台名称">
+                  </div>
+                  <div class="form-group">
+                    <label for="sec_url">SRC链接</label>
+                    <input type="url" class="form-control" id="src_platform_url" placeholder="输入SRC平台URL">
+                  </div>
+                </div>
+            </form>
+        </div>
+    </div>
+      <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">保存</button>
+      </div>
+  </div>
+  <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+</div>
+
+
+{% endblock %}
+{% block js %}
+    <script src="{% static 'adminlte/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+    <script>
+    $("#ips_table").DataTable({
+    });
+    $( "ips_table" ).tooltip();
+
+    </script>
+{% endblock %}

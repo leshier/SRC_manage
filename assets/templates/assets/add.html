@@ -1,0 +1,282 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+    <!-- DataTables -->
+  <link rel="stylesheet" href="{% static 'adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'adminlte/plugins/select2/css/select2.min.css' %}">
+  <link rel="stylesheet" href="{% static 'adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+{% endblock %}
+{% block header_title %}{% endblock %}
+{% block header_list %}
+<li class="breadcrumb-item active">增加资产</li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+          <h3 class="card-title">增加资产</h3>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body">
+        <div class="row">
+        <div class="col-lg-6">
+
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">增加SRC平台</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form">
+                  {% csrf_token %}
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="src_name">SRC平台名称</label>
+                    <input type="text" class="form-control" id="src_platform_name" placeholder="输入SRC平台名称">
+                  </div>
+                  <div class="form-group">
+                    <label for="sec_url">SRC链接</label>
+                    <input type="url" class="form-control" id="src_platform_url" placeholder="输入SRC平台URL">
+                  </div>
+{#                  <div class="form-group">#}
+{#                    <label for="exampleInputFile">File input</label>#}
+{#                    <div class="input-group">#}
+{#                      <div class="custom-file">#}
+{#                        <input type="file" class="custom-file-input" id="exampleInputFile">#}
+{#                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>#}
+{#                      </div>#}
+{#                      <div class="input-group-append">#}
+{#                        <span class="input-group-text">Upload</span>#}
+{#                      </div>#}
+{#                    </div>#}
+{#                  </div>#}
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <button type="button" id="src_platform_clear" class="btn btn-default ">清空</button>
+                    <button type="button" id="src_platform_submit" class="btn btn-primary float-right">提交</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+
+            <div class="card card-warning">
+              <div class="card-header">
+                <h3 class="card-title">增加厂商</h3>
+                <i class="nav-icon fas fa-repeat"></i>
+              </div>
+
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form">
+                  {% csrf_token %}
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="src_name">选择SRC平台</label>
+                    <select class="form-control select2" id="select_src" style="width: 100%;">
+                        {% for src in src_platform %}
+                            <option>{{ src.src_platform_name }}</option>
+
+                        {% endfor %}
+
+
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="c_name">厂商名称</label>
+                    <input type="text" class="form-control" id="company_name" placeholder="输入厂商名称">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">域名资产</label>
+                    <textarea class="form-control" rows="3" id="company_domain_domains" placeholder="输入域名资产,多个主域名请换行。&#10;baidu.com&#10;bilibili.com"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">IP资产</label>
+                    <textarea class="form-control" rows="3" id="company_ips_ips" placeholder="输入IP资产,多个IP段请换行。&#10;127.0.0.1/24&#10;192.168.1.1/24"></textarea>
+                  </div>
+
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <button type="button" id="company_clear" class="btn btn-default ">清空</button>
+                    <button type="button" id="company_submit" class="btn btn-primary float-right">提交</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block js %}
+    <script src="{% static 'adminlte/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'adminlte/plugins/select2/js/select2.full.min.js' %}"></script>
+    <script>
+        $('.select2').select2({
+            theme: 'bootstrap4'
+        })
+
+        //Initialize Select2 Elements
+
+        $(function () {
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+             }
+                return cookieValue;
+            }
+            var csrftoken = getCookie('csrftoken');
+            function csrfSafeMethod(method) {
+                // 这些HTTP方法不要求CSRF包含
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+            $.ajaxSetup({
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            $("#src_platform_name").bind("input propertychange",function () {
+                var src_platform_name = $('#src_platform_name').val();
+
+                handleurl = '/chksrcname/'
+                if (src_platform_name === ''){
+                    return false;
+                }else {
+                    $.post(handleurl,{'src_platform_name':src_platform_name},function (data) {
+                        if(data.data === 1){
+                            $('#src_platform_name').attr('class','form-control is-invalid');
+                        }
+                        else{
+                            $('#src_platform_name').attr('class','form-control');
+                            return true;
+                        }
+                    },'json')
+                }
+            });
+            $('#src_platform_clear').click(function () {
+                $('#src_platform_name').val('');
+                $('#src_platform_url').val('');
+            })
+            $('#src_platform_submit').click(function () {
+                var src_platform_name = $('#src_platform_name').val();
+                var src_platform_url = $('#src_platform_url').val();
+
+                handleurl = '/addsrc/'
+                if (src_platform_name === '' || src_platform_url ===''){
+                        Toast.fire({
+                            icon: 'warning',
+                            title: '名称和URL输入为空'
+                        })
+                    return false;
+                }else {
+                    $.post(handleurl,{'src_platform_name':src_platform_name,'src_platform_url':src_platform_url},function (data) {
+                        if(data.data === 0){
+                            Toast.fire({
+                                icon: 'info',
+                                title: '添加成功'
+                            })
+                            $('#src_platform_name').val('');
+                            $('#src_platform_url').val('');
+                        }else{
+                            Toast.fire({
+                                icon: 'error',
+                                title: '添加失败,SRC已经存在'
+                            })
+                        }
+
+
+                    },'json')
+                }
+            });
+            $("#company_name").bind("input propertychange",function () {
+                var company_name = $('#company_name').val();
+
+                handleurl = '/chkcomname/'
+                if (company_name === ''){
+                    return false;
+                }else {
+                    $.post(handleurl,{'company_name':company_name},function (data) {
+                        if(data.data === 1){
+                            $('#company_name').attr('class','form-control is-invalid');
+                        }
+                        else{
+                            $('#company_name').attr('class','form-control');
+                            return true;
+                        }
+                    },'json')
+                }
+            });
+            $('#company_clear').click(function () {
+                $('#company_name').val();
+                $('#company_domain_domains').val();
+                $('#company_ips_ips').val();
+            });
+
+            $('#company_submit').click(function () {
+                var src_platform_name = $("#select_src option:selected").text();
+                var company_name = $('#company_name').val();
+                var company_domain_domains = $('#company_domain_domains').val();
+                var company_ips_ips = $('#company_ips_ips').val();
+
+                handleurl = '/addcom/'
+                if (src_platform_name === '' || company_name ===''){
+                        Toast.fire({
+                            icon: 'warning',
+                            title: '没有选择SRC平台或者厂商名称为空'
+                        })
+                    return false;
+                }else {
+                    $.post(handleurl,{'src_platform_name':src_platform_name,'company_name':company_name,'company_domain_domains':company_domain_domains,'company_ips_ips':company_ips_ips},function (data) {
+                        if(data.data === 0){
+                            Toast.fire({
+                                icon: 'info',
+                                title: '添加成功'
+                            })
+                            $('#company_name').val('');
+                            $('#company_domain_domains').val('');
+                            $('#company_ips_ips').val('');
+
+                        }else{
+                            Toast.fire({
+                                icon: 'error',
+                                title: '添加失败,厂商已经存在'
+                            })
+                        }
+
+                    },'json')
+                }
+            });
+
+        })
+
+    </script>
+{% endblock %}
